@@ -1,3 +1,11 @@
+*{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: fit-content;
+    margin-inline: auto;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 20px;
@@ -5,7 +13,7 @@ body {
     color: #333;
   }
   
-  h5 {
+h5 {
     color: #1a73e8;
     text-align: center;
     font-size: 18px;
@@ -14,9 +22,9 @@ body {
     letter-spacing: 2px;
     border-bottom: 2px solid #1a73e8;
     padding-bottom: 5px;
-  }
+}
   
-  p {
+p {
     color: #555;
     font-size: 18px;
     line-height: 1.8;
