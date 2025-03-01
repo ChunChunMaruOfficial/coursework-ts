@@ -94,4 +94,90 @@ const calculateTotalItems = (orderId: number): number => {
     return orders[orderId].items.length
 }
 
-/* ---------------------------------- Employee ---------------------------------- */
+/* ---------------------------------- Employees ---------------------------------- */
+
+interface Employee {
+    id: number
+    name: string
+    department: string
+    salary: number
+}
+
+let employees: Employee[] = new Array(getrandominit(5, 12))
+
+for (let i = 0; i < employees.length; i++) {
+    employees[i] = { id: i, name: `Employee-${Math.round(i * Math.PI)}`, department: `${getrandominit(0, 5)}-st department`, salary: getrandominit(1000, 100000) }
+}
+
+const groupByDepartment = (): object => {
+    const obj = {}
+    for (let i = 0; i < employees.length; i++) {
+        if (!obj[employees[i].department]) {
+            obj[employees[i].department] = []
+        }
+        obj[employees[i].department] = [...obj[employees[i].department], employees[i]]
+    }
+    return obj
+}
+
+const render = () => {
+    console.log('render called');
+    
+    if (group) group.style.display = 'none'
+    const employeesElement: HTMLDivElement | null = document.querySelector('.employees')
+    const Christobject = groupByDepartment()
+
+    if (employeesElement) {
+        employeesElement.innerHTML = ''
+    }
+
+    for (let i = 0; i < Object.keys(Christobject).length; i++) {
+        let text = ''
+        for (let j = 0; j < Christobject[Object.keys(Christobject)[i]].length; j++) {
+
+            text += `
+    <div class="employee">
+        <p class=".id">Id: <b>${Christobject[Object.keys(Christobject)[i]][j].id}</b></p>
+        <p class=".name">Name: <b>${Christobject[Object.keys(Christobject)[i]][j].name}</b></p>
+        <p class=".salary">Salary: <b>${Christobject[Object.keys(Christobject)[i]][j].salary}</b></p>
+    </div>`
+        }
+
+        if (employeesElement) {
+            employeesElement.innerHTML += `<div>
+                <h2>${Object.keys(Christobject)[i]}</h2>
+                ${text}
+                </div>`
+        }
+    }
+}
+
+
+const confirmObject: HTMLButtonElement | null = document.querySelector('#confirm')
+const newnameObject: HTMLInputElement | null = document.querySelector('#newname')
+const departmentObject: HTMLInputElement | null = document.querySelector('#newdepartment')
+const salaryObject: HTMLInputElement | null = document.querySelector('#newsalary')
+
+confirmObject?.addEventListener('click', () => {
+    console.log('confirm clicked');
+    
+    if (!newnameObject?.value) {
+        alert('enter a name!!!!')
+        return 0
+    }
+    if (!departmentObject?.value) {
+        alert('enter a department!!!!')
+        return 0
+    }
+    if (!salaryObject?.value) {
+        alert('enter a salary!!!!')
+        return 0
+    }
+    employees = [...employees, { id: (employees.length + 1), name: newnameObject?.value, department: departmentObject?.value, salary: Number(salaryObject?.value) }]
+
+    render()
+})
+
+const group: HTMLButtonElement | null = document.querySelector('.group')
+group?.addEventListener('click', () => render())
+
