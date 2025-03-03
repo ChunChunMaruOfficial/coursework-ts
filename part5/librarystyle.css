@@ -1,0 +1,97 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #8e44ad, #3498db);
+    /* Фиолетовый градиент */
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    gap: 50px;
+}
+
+.library {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.book {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.book:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.author {
+    font-size: 16px;
+    color: #d1d1d1;
+}
+
+div:nth-child(2) {
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input {
+    display: block;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    background: #8e44ad;
+    /* Фиолетовый цвет */
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: #9b59b6;
+    /* Более светлый фиолетовый */
+}

@@ -106,3 +106,59 @@ confirmObject === null || confirmObject === void 0 ? void 0 : confirmObject.addE
 });
 var group = document.querySelector('.group');
 group === null || group === void 0 ? void 0 : group.addEventListener('click', function () { return render(); });
+var library = {
+    name: 'small library',
+    books: [{ title: "1984", author: "George Orwell" },
+        { title: "Catch-22", author: "Joseph Heller" },
+        { title: "Lolita", author: "Vladimir Nabokov" },
+        { title: "American Psycho", author: "Bret Easton Ellis" },
+        { title: "The Satanic Verses", author: "Salman Rushdie" },
+        { title: "Malleus Maleficarum", author: "Heinrich Kramer and Jacob Sprenger" },
+        { title: "It", author: "Stephen King" },
+        { title: "Fahrenheit 451", author: "Ray Bradbury" },
+        { title: "Harry Potter", author: "J.K. Rowling" },
+        { title: "Mein Kampf", author: "Adolf Hitler" }]
+};
+var addBook = function (library, book) {
+    library.books = __spreadArray(__spreadArray([], library.books, true), [book], false);
+    return library;
+};
+var removeBookByTitle = function (library, booksname) {
+    library.books = library.books.filter(function (v) { return v.title.toLocaleLowerCase() != booksname.toLocaleLowerCase(); });
+    return library;
+};
+var libraryElement = document.querySelector('.library');
+var booksrender = function () {
+    if (libraryElement) {
+        libraryElement.innerHTML = '';
+        for (var i = 0; i < library.books.length; i++) {
+            libraryElement.innerHTML += "        <div class=\"book\">\n                <h3 class=\"title\">".concat(library.books[i].title, "</h3>\n                <p class=\"author\"> ").concat(library.books[i].author, "</p>\n            </div>");
+        }
+    }
+};
+booksrender();
+var addBookElement = document.querySelector('#add');
+var titleofbook = document.querySelector('.titleofbook');
+var authorofbook = document.querySelector('.authorofbook');
+var removetitleofbook = document.querySelector('.removetitleofbook');
+var removebookbutton = document.querySelector('#remove');
+addBookElement === null || addBookElement === void 0 ? void 0 : addBookElement.addEventListener('click', function () {
+    if (!(titleofbook === null || titleofbook === void 0 ? void 0 : titleofbook.value)) {
+        alert('enter a title!!!!');
+        return 0;
+    }
+    if (!(authorofbook === null || authorofbook === void 0 ? void 0 : authorofbook.value)) {
+        alert('enter the author!!!!');
+        return 0;
+    }
+    library = addBook(library, { title: titleofbook.value, author: authorofbook.value });
+    booksrender();
+});
+removebookbutton === null || removebookbutton === void 0 ? void 0 : removebookbutton.addEventListener('click', function () {
+    if (!(removetitleofbook === null || removetitleofbook === void 0 ? void 0 : removetitleofbook.value)) {
+        alert('enter a title!!!!');
+        return 0;
+    }
+    removeBookByTitle(library, removetitleofbook === null || removetitleofbook === void 0 ? void 0 : removetitleofbook.value);
+    booksrender();
+});

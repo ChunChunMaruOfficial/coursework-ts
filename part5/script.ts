@@ -122,7 +122,7 @@ const groupByDepartment = (): object => {
 
 const render = () => {
     console.log('render called');
-    
+
     if (group) group.style.display = 'none'
     const employeesElement: HTMLDivElement | null = document.querySelector('.employees')
     const Christobject = groupByDepartment()
@@ -160,7 +160,7 @@ const salaryObject: HTMLInputElement | null = document.querySelector('#newsalary
 
 confirmObject?.addEventListener('click', () => {
     console.log('confirm clicked');
-    
+
     if (!newnameObject?.value) {
         alert('enter a name!!!!')
         return 0
@@ -181,3 +181,79 @@ confirmObject?.addEventListener('click', () => {
 const group: HTMLButtonElement | null = document.querySelector('.group')
 group?.addEventListener('click', () => render())
 
+
+/* ---------------------------------- Library ---------------------------------- */
+
+
+interface Library {
+    name: string
+    books: { title: string, author: string }[]
+}
+
+let library: Library = {
+    name: 'small library',
+    books: [{ title: "1984", author: "George Orwell" },
+    { title: "Catch-22", author: "Joseph Heller" },
+    { title: "Lolita", author: "Vladimir Nabokov" },
+    { title: "American Psycho", author: "Bret Easton Ellis" },
+    { title: "The Satanic Verses", author: "Salman Rushdie" },
+    { title: "Malleus Maleficarum", author: "Heinrich Kramer and Jacob Sprenger" },
+    { title: "It", author: "Stephen King" },
+    { title: "Fahrenheit 451", author: "Ray Bradbury" },
+    { title: "Harry Potter", author: "J.K. Rowling" },
+    { title: "Mein Kampf", author: "Adolf Hitler" }]
+}
+
+const addBook = (library: Library, book: { title: string, author: string }):Library => {
+    library.books = [...library.books, book]
+    return library
+}
+
+const removeBookByTitle = (library: Library, booksname: string) => {
+    library.books = library.books.filter(v => v.title.toLocaleLowerCase() != booksname.toLocaleLowerCase())
+    return library
+}
+
+const libraryElement: HTMLDivElement | null = document.querySelector('.library')
+
+const booksrender = () => {
+    if (libraryElement) {
+        libraryElement.innerHTML = '' 
+        for (let i = 0; i < library.books.length; i++) {
+            libraryElement.innerHTML += `        <div class="book">
+                <h3 class="title">${library.books[i].title}</h3>
+                <p class="author"> ${library.books[i].author}</p>
+            </div>`
+        }
+    }
+}
+
+booksrender()
+
+const addBookElement: HTMLButtonElement | null = document.querySelector('#add')
+const titleofbook: HTMLInputElement | null = document.querySelector('.titleofbook')
+const authorofbook: HTMLInputElement | null = document.querySelector('.authorofbook')
+const removetitleofbook: HTMLInputElement | null = document.querySelector('.removetitleofbook')
+const removebookbutton:HTMLButtonElement | null = document.querySelector('#remove')
+
+addBookElement?.addEventListener('click', () => {
+    if (!titleofbook?.value) {
+        alert('enter a title!!!!')
+        return 0
+    }
+    if (!authorofbook?.value) {
+        alert('enter the author!!!!')
+        return 0
+    }
+    library = addBook(library,{ title: titleofbook.value, author: authorofbook.value }) 
+    booksrender()
+})
+
+removebookbutton?.addEventListener('click', () => {
+    if (!removetitleofbook?.value) {
+        alert('enter a title!!!!')
+        return 0
+    }
+    removeBookByTitle(library,removetitleofbook?.value)
+    booksrender()
+})

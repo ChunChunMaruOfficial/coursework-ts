@@ -1,0 +1,68 @@
+body {
+    background-color: #f0f0f0;
+    color: #333333;
+    font-family: Arial, sans-serif;
+}
+
+div {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    color: #000000;
+}
+
+input[type="text"],
+input[type="number"],
+button {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="text"],
+input[type="number"] {
+    background-color: #f9f9f9;
+}
+
+button {
+    background-color: #333333;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555555;
+}
+
+.car {
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+.carname {
+    color: #000000;
+}
+
+.cardistance {
+    color: #666666;
+}
+
+span{
+    display: flex;
+    flex-direction: row;
+    gap: 12px
+}
