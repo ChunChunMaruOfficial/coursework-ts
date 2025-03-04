@@ -1,0 +1,36 @@
+body {
+    background-color: #2e003e; /* Тёмно-фиолетовый фон */
+    color: #ff5733; /* Красный текст */
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #ab47bc; /* Светло-фиолетовый для заголовков */
+}
+
+span {
+    color: #e91e63; /* Яркий розово-красный для координат */
+}
+
+button {
+    background-color: #800020; /* Бордовый фон кнопок */
+    color: #ffffff; /* Белый текст */
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4a0033; /* Тёмно-фиолетовый при наведении */
+    color: #ffcccb; /* Светло-красный текст при наведении */
+}
+
+div {
+    border: 2px solid #8b008b; /* Фиолетовая рамка для секций */
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    background-color: #330033; /* Тёмно-фиолетовый фон секций */
+}

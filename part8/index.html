@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 8</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="character">
+            <h1>Create Character</h1>
+                <input type="text" id="charName" placeholder="Name:">
+                <input type="number" id="charHealth" placeholder="Health:">
+                <input type="number" id="charAttack" placeholder="Attack:">
+            <button onclick="createCharacter()">Create Character</button>
+        </div>
+
+        <div class="item">
+            <h1>Create Item</h1>
+                <input type="text" id="itemName" placeholder="Name:">
+                <input type="text" id="itemType" placeholder="Type:">
+                <input type="number" id="itemPower" placeholder="Power:">
+            <button onclick="createItem()">Create Item</button>
+        </div>
+
+        <div class="inventory">
+            <h1>Add Item to Inventory</h1>
+                <input type="text" id="charToAdd" placeholder="Character Name:">
+                <input type="text" id="itemToAdd" placeholder="Item Name:">
+            <button onclick="addItemToCharacter()">Add Item (check console)</button>
+        </div>
+    </div>
+    <div class="reserve">
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
