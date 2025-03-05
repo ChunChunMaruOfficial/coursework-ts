@@ -1,0 +1,101 @@
+.alert {
+    color: red;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-wrap: nowrap;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f7;
+    color: #1c1c1e;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: min-content;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 16px 0;
+}
+
+input {
+    display: block;
+    padding: 10px 16px;
+    margin: 8px 16px;
+    border: 1px solid #d1d1d6;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+button {
+
+    padding: 5px 8px;
+    margin: 8px 16px;
+    border: none;
+    border-radius: 12px;
+    background-color: #007aff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #0056d6;
+}
+
+.add,
+.storage,
+.card,
+.storage>* {
+    width: max-content;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.storage {
+    display: flex;
+    flex-direction: row;
+}
+
+p,
+h3 {
+    margin: 8px 0;
+}
+
+p {
+    font-size: 16px;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.alert {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ff3b30;
+    margin: 16px 0;
+}
