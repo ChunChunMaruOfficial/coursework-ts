@@ -35,36 +35,67 @@ class Comic {
         return this._title;
     }
 
+    set title(title: string) {
+        this._title = title
+    }
+
     get authorName(): string {
         return this._authorName;
+    }
+
+    set authorName(authorName: string) {
+        this._authorName = authorName
     }
 
     get publisherName(): string {
         return this._publisherName;
     }
 
+    set publisherName(publisherName: string) {
+        this._publisherName = publisherName
+    }
+
     get pages(): number {
         return this._pages;
+    }
+    set pages(pages: number) {
+        this._pages = pages
     }
 
     get genre(): string {
         return this._genre;
     }
+    set genre(genre: string) {
+        this._genre = genre
+    }
 
     get year(): number {
-        return this._year;
+        return this._year
+    }
+
+    set year(year: number) {
+        this._year = year
     }
 
     get price(): number {
         return this._price;
     }
+    set price(price: number) {
+        this._price = price
+    }
 
     get discount(): number {
         return this._discount;
     }
+    set discount(discount: number) {
+        this._discount = discount
+    }
 
     get timeAdded(): string {
         return this._timeAdded;
+    }
+    set timeAdded(timeAdded: string) {
+        this._timeAdded = timeAdded
     }
 }
 
@@ -130,17 +161,10 @@ const comicrender = () => {
 }
 
 comicrender()
-
-const storageElements = document.querySelectorAll('.storageElement')
-storageElements.forEach(v => {
-    const edityear = v.querySelector('.edityear')
-    edityear?.addEventListener('click', () => {
-
-    })
-})
+let storageElements = document.querySelectorAll('.storageElement')
 
 
-/* -------------------------- Adding -------------------------- */
+
 
 const addElement: HTMLButtonElement | null = document.querySelector('.addbutton')
 const alertElement: HTMLParagraphElement | null = document.querySelector('.alert')
@@ -154,6 +178,10 @@ const yearElement: HTMLInputElement | null = document.querySelector('#year')
 const priceElement: HTMLInputElement | null = document.querySelector('#price')
 const discountElement: HTMLInputElement | null = document.querySelector('#discount')
 const timeAddedElement: HTMLInputElement | null = document.querySelector('#timeAdded')
+
+
+/* -------------------------- Adding -------------------------- */
+
 
 addElement?.addEventListener('click', () => {
     if (titleElement && authorNameElement && publisherNameElement && pagesElement && genreElement && yearElement && priceElement && discountElement && timeAddedElement && alertElement) {
@@ -190,11 +218,97 @@ addElement?.addEventListener('click', () => {
             alertElement.innerHTML = `please, enter time of adding of comic`
             return 0
         }
-
+        alertElement.innerHTML = ``
         const newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value)
 
         comics.push(newcomic)
         comicrender()
-
     }
+})
+
+
+/* -------------------------- Editing -------------------------- */
+
+const removeallactiveeditings = () => {
+    storageElements = document.querySelectorAll('.storageElement')
+    storageElements.forEach((v, i) => {
+        const spans = v.querySelectorAll('span')
+        spans?.forEach((v1, i1) => {
+            
+                const currenttext = v1.querySelector('p')
+                const currentinput: HTMLInputElement | null = v1.querySelector('input')
+                if (currentinput) {
+                    currentinput.remove()
+                }
+                if (currenttext) currenttext.style.display = 'block'
+            
+        })
+    })
+}
+
+function Editing() {
+    storageElements = document.querySelectorAll('.storageElement')
+    storageElements.forEach((v, i) => {
+
+        let t: HTMLButtonElement | null
+        const spans = v.querySelectorAll('span')
+        spans?.forEach((v1, i1) => {
+            const editbutton = v1.querySelector('button')
+            const currenttext = v1.querySelector('p')
+            editbutton?.addEventListener('click', () => {
+                if ((!t || t != editbutton) && currenttext) {
+                    removeallactiveeditings()
+
+                    if (currenttext) currenttext.style.display = 'none'
+                    const createinput = document.createElement('input')
+                    createinput['placeholder'] = currenttext.innerHTML
+                    createinput.focus()
+                    v1.appendChild(createinput)
+                    t = editbutton
+                } else if (t == editbutton) {
+
+                    const currentinput = v1.querySelector('input')                    
+                    switch (i1) {
+                        case 0:
+                            comics[i].year = Number(currentinput?.value)
+                            break;
+                        case 1:
+                            comics[i].title = String(currentinput?.value)
+                            break;
+                        case 2:
+                            comics[i].authorName = String(currentinput?.value)
+                            break;
+                        case 3:
+                            comics[i].publisherName = String(currentinput?.value)
+                            break;
+                        case 4:
+                            comics[i].genre = String(currentinput?.value)
+                            break;
+                        case 5:
+                            comics[i].pages = Number(currentinput?.value)
+                            break;
+                        case 6:
+                            comics[i].price = Number(currentinput?.value)
+                            break;
+                        case 7:
+                            comics[i].discount = Number(currentinput?.value)
+                            break;
+                        case 8:
+                            comics[i].timeAdded = String(currentinput?.value)
+                            break;
+                    }
+                    currentinput?.remove()
+                    if (currenttext) currenttext.style.display = 'block'
+                    comicrender()
+                    t = null
+                }
+            })
+        })
+    })
+
+}
+Editing()
+storageElement?.addEventListener('click', () => {
+
+    Editing()
 })
