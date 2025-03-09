@@ -1,12 +1,3 @@
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 var Comic = /** @class */ (function () {
     function Comic(title, authorName, publisherName, pages, genre, year, price, discount, timeAdded) {
         this._title = title;
@@ -117,27 +108,28 @@ var comic1 = new Comic("The Adventures of Superhero X", "John Doe", "ComicWorld"
 var comic2 = new Comic("Mystery of the Lost Galaxy", "Jane Smith", "GalacticComics", 95, "Sci-Fi", 2020, 14.99, 0.2, String(Date.now()));
 var comic3 = new Comic("The Enchanted Forest", "Emily Johnson", "FantasyPress", 110, "Fantasy", 2022, 17.99, 0.15, String(Date.now()));
 comics.push(comic1, comic2, comic3);
-var storageElement = document.querySelector('.storage');
-var cardElement = document.querySelector('.card');
-var comicrender = function (element) {
-    if (element) {
-        var classs = void 0;
-        var length_1;
-        if (element == storageElement) {
-            classs = 'storageElement';
-            length_1 = comics.length;
-        }
-        else {
-            length_1 = card.length;
-            classs = 'card';
-        }
-        element.innerHTML = "<h2>".concat(classs, "</h2>");
-        for (var i = 0; i < length_1; i++) {
-            element.innerHTML += "<div class=\"".concat(classs, "\">\n            <button class='addtocard'> \uD83D\uDED2 </button>\n        <span> <p>\uD83D\uDCC5 ").concat(comics[i].year, "</p> <button> \u270F </button> </span>\n        <span><h3>").concat(comics[i].title, "</h3> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE38 ").concat(comics[i].authorName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCE2 ").concat(comics[i].publisherName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE0E ").concat(comics[i].genre, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCD6 ").concat(comics[i].pages, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCB2 ").concat(comics[i].price, "</p> <button> \u270F </button> </span>\n        <span><p>\u303D ").concat(comics[i].discount, "</p> <button> \u270F </button> </span>\n        <span><p>\u23F2 ").concat(comics[i].timeAdded, "</p> <button> \u270F </button> </span>\n        <button class='deletecomic'> delete </button>\n        </div>");
+var storageElement = document.querySelector('.storageelements');
+var cardElement = document.querySelector('.cardelements');
+var cardElementpart = document.querySelectorAll('.cardElement');
+var comicrender = function () {
+    if (storageElement) {
+        storageElement.innerHTML = '';
+        for (var i = 0; i < comics.length; i++) {
+            storageElement.innerHTML += "<div class=\"storageElement\">\n           <button class='addtocard'> \uD83D\uDED2 </button>\n        <span> <p>\uD83D\uDCC5 ".concat(comics[i].year, "</p> <button> \u270F </button> </span>\n        <span><h3>").concat(comics[i].title, "</h3> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE38 ").concat(comics[i].authorName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCE2 ").concat(comics[i].publisherName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE0E ").concat(comics[i].genre, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCD6 ").concat(comics[i].pages, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCB2 ").concat(comics[i].price, "</p> <button> \u270F </button> </span>\n        <span><p>\u303D ").concat(comics[i].discount, "</p> <button> \u270F </button> </span>\n        <span><p>\u23F2 ").concat(comics[i].timeAdded, "</p> <button> \u270F </button> </span>\n        <button class='deletecomic'> delete </button>\n        </div>");
         }
     }
 };
-comicrender(storageElement);
+var cardender = function (array) {
+    var answer = '';
+    if (cardElement) {
+        cardElement.innerHTML = '';
+        for (var i = 0; i < array.length; i++) {
+            answer += "<div class=\"cardElement\">\n         <p>\uD83D\uDCC5 ".concat(array[i].year, "</p> \n        <h3>").concat(array[i].title, "</h3> \n        <p>\uD83D\uDE38 ").concat(array[i].authorName, "</p> \n        <p>\uD83D\uDCE2 ").concat(array[i].publisherName, "</p> \n        <p>\uD83D\uDE0E ").concat(array[i].genre, "</p> \n        <p>\uD83D\uDCD6 ").concat(array[i].pages, "</p> \n        <p>\uD83D\uDCB2 ").concat(array[i].price, "</p> \n        <p>\u303D ").concat(array[i].discount, "</p> \n        <p>\u23F2 ").concat(array[i].timeAdded, "</p> \n        <button class='remove'> remove from card </button>\n        </div>");
+        }
+    }
+    return answer;
+};
+comicrender();
 var storageElements = document.querySelectorAll('.storageElement');
 var addElement = document.querySelector('.addbutton');
 var alertElement = document.querySelector('.alert');
@@ -188,7 +180,7 @@ addElement === null || addElement === void 0 ? void 0 : addElement.addEventListe
         alertElement.innerHTML = "";
         var newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value);
         comics.push(newcomic);
-        comicrender(storageElement);
+        comicrender();
     }
 });
 /* -------------------------- Editing -------------------------- */
@@ -260,7 +252,7 @@ function Editing() {
                     }
                     if (currenttext)
                         currenttext.style.display = 'block';
-                    comicrender(storageElement);
+                    comicrender();
                     editbutton.innerHTML = '✏';
                     t = null;
                     currentinput === null || currentinput === void 0 ? void 0 : currentinput.remove();
@@ -276,7 +268,7 @@ var Deliting = function () {
         var deleteb = v.querySelector('.deletecomic');
         deleteb === null || deleteb === void 0 ? void 0 : deleteb.addEventListener('click', function () {
             comics = comics.filter(function (_, i1) { return i != i1; });
-            comicrender(storageElement);
+            comicrender();
         });
     });
 };
@@ -286,16 +278,50 @@ var Addtocard = function () {
     storageElements.forEach(function (v, i) {
         var addtocardbtn = v.querySelector('.addtocard');
         addtocardbtn === null || addtocardbtn === void 0 ? void 0 : addtocardbtn.addEventListener('click', function () {
-            card = __spreadArray(__spreadArray([], card, true), [comics[i]], false);
-            comicrender(cardElement);
+            card.push(comics[i]);
+            if (cardElement)
+                cardElement.innerHTML = cardender(card);
+        });
+    });
+};
+/* -------------------------- Remove from card -------------------------- */
+var Removefromcard = function () {
+    cardElementpart = document.querySelectorAll('.cardElement');
+    console.log(cardElementpart);
+    cardElementpart.forEach(function (v, i) {
+        var removebtn = v.querySelector('.remove');
+        removebtn === null || removebtn === void 0 ? void 0 : removebtn.addEventListener('click', function () {
+            console.log('button click');
+            card = card.filter(function (_, i1) { return i1 !== i; });
+            if (cardElement)
+                cardElement.innerHTML = cardender(card);
         });
     });
 };
 Addtocard();
 Deliting();
 Editing();
+Removefromcard();
 storageElement === null || storageElement === void 0 ? void 0 : storageElement.addEventListener('click', function () {
-    Addtocard();
     Deliting();
     Editing();
+});
+cardElement === null || cardElement === void 0 ? void 0 : cardElement.addEventListener('click', function () {
+    console.log('click');
+    Removefromcard();
+});
+var searchbtn = document.querySelector('.searchbtn');
+var resultElement = document.querySelector('.result');
+var searchinp = document.querySelector('.searchinp');
+searchbtn === null || searchbtn === void 0 ? void 0 : searchbtn.addEventListener('click', function () {
+    if (searchinp && alertElement) {
+        if (!searchinp.value) {
+            alertElement.innerHTML = "please, enter text";
+            return 0;
+        }
+        var tarray = comics.filter(function (v) { return v.authorName.toLowerCase() == searchinp.value.toLowerCase() || v.title.toLowerCase() == searchinp.value.toLowerCase(); });
+        console.log(tarray);
+        if (resultElement)
+            resultElement.innerHTML = cardender(tarray);
+    }
 });

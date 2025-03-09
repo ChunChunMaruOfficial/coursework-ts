@@ -9,25 +9,34 @@
 </head>
 
 <body>
-    <div class="add">
-        <h2>Add new Comic</h2>
-        <input type="text" id="title" placeholder="title">
-        <input type="text" id="authorName" placeholder="author name">
-        <input type="text" id="publisherName" placeholder="publisher name">
-        <input type="number" id="pages" placeholder="pages">
-        <input type="text" id="genre" placeholder="genre">
-        <input type="number" id="year" placeholder="year">
-        <input type="number" id="price" placeholder="price">
-        <input type="number" id="discount" placeholder="discount (optional)">
-        <input type="text" id="timeAdded" placeholder="time added">
-        <button class="addbutton"> add a comic </button>
-    </div>
-    <div class="storage">
+    <header><input type="text" placeholder="enter a title or author of comic" class="searchinp"><button class="searchbtn">🔍</button></header>
+    <h1 class="alert"></h1>
+<div class="result"></div>
+    <div class="wrapper">
+        <div class="add">
+            <h2>Add new Comic</h2>
+            <div>
+                <input type="text" id="title" placeholder="title">
+                <input type="text" id="authorName" placeholder="author name">
+                <input type="text" id="publisherName" placeholder="publisher name">
+                <input type="number" id="pages" placeholder="pages">
+                <input type="text" id="genre" placeholder="genre">
+                <input type="number" id="year" placeholder="year">
+                <input type="number" id="price" placeholder="price">
+                <input type="number" id="discount" placeholder="discount (optional)">
+                <input type="text" id="timeAdded" placeholder="time added">
+                <button class="addbutton"> add a comic </button>
+            </div>
+        </div>
+        <div class="storage">
+            <h2>Storage</h2>
+            <div class="storageelements"></div>
+        </div>
     </div>
     <div class="card">
-        
+        <h2>Card</h2>
+<div class="cardelements"></div>
     </div>
-    <h1 class="alert">alert</h1>
     <script src="script.js"></script>
 </body>
 

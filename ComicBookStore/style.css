@@ -16,8 +16,8 @@ body {
     background-color: #f2f2f7;
     color: #1c1c1e;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
 
 span {
@@ -65,7 +65,7 @@ button:hover {
 .add,
 .storage,
 .card,
-.storage>* {
+.storage>*:not(.storage>h2) {
     width: max-content;
     margin: 16px;
     padding: 16px;
@@ -76,8 +76,9 @@ button:hover {
 
 .storage {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
+
 
 p,
 h3 {
@@ -98,4 +99,18 @@ button:hover{
     font-weight: 600;
     color: #ff3b30;
     margin: 16px 0;
+}
+.cardelements,
+.storageelements,
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

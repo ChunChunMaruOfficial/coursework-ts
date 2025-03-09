@@ -140,24 +140,17 @@ const comic3 = new Comic(
 
 comics.push(comic1, comic2, comic3)
 
-const storageElement: HTMLDivElement | null = document.querySelector('.storage')
-const cardElement: HTMLDivElement | null = document.querySelector('.card')
+const storageElement: HTMLDivElement | null = document.querySelector('.storageelements')
+const cardElement: HTMLDivElement | null = document.querySelector('.cardelements')
+let cardElementpart = document.querySelectorAll('.cardElement')
 
-const comicrender = (element: HTMLDivElement | null) => {
-    if (element) {
-        let classs: string
-        let length: number
-        if (element == storageElement) {
-            classs = 'storageElement'
-            length = comics.length
-        } else {
-            length = card.length
-            classs = 'card'
-        }
-        element.innerHTML = `<h2>${classs}</h2>`
-        for (let i = 0; i < length; i++) {
-            element.innerHTML += `<div class="${classs}">
-           ${ element == storageElement ?  `<button class='addtocard'> 🛒 </button>` : ''}
+
+const comicrender = () => {
+    if (storageElement) {
+        storageElement.innerHTML = ''
+        for (let i = 0; i < comics.length; i++) {
+            storageElement.innerHTML += `<div class="storageElement">
+           <button class='addtocard'> 🛒 </button>
         <span> <p>📅 ${comics[i].year}</p> <button> ✏ </button> </span>
         <span><h3>${comics[i].title}</h3> <button> ✏ </button> </span>
         <span><p>😸 ${comics[i].authorName}</p> <button> ✏ </button> </span>
@@ -173,7 +166,29 @@ const comicrender = (element: HTMLDivElement | null) => {
     }
 }
 
-comicrender(storageElement)
+const cardender = (array: Comic[]) : string=> {
+    let answer: string = ''
+    if (cardElement) {
+        cardElement.innerHTML = ''
+        for (let i = 0; i < array.length; i++) {
+            answer += `<div class="cardElement">
+         <p>📅 ${array[i].year}</p> 
+        <h3>${array[i].title}</h3> 
+        <p>😸 ${array[i].authorName}</p> 
+        <p>📢 ${array[i].publisherName}</p> 
+        <p>😎 ${array[i].genre}</p> 
+        <p>📖 ${array[i].pages}</p> 
+        <p>💲 ${array[i].price}</p> 
+        <p>〽 ${array[i].discount}</p> 
+        <p>⏲ ${array[i].timeAdded}</p> 
+        <button class='remove'> remove from card </button>
+        </div>`
+        }
+    }
+    return answer
+}
+
+comicrender()
 let storageElements = document.querySelectorAll('.storageElement')
 
 
@@ -233,7 +248,7 @@ addElement?.addEventListener('click', () => {
         const newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value)
 
         comics.push(newcomic)
-        comicrender(storageElement)
+        comicrender()
     }
 })
 
@@ -308,7 +323,7 @@ function Editing() {
                             break;
                     }
                     if (currenttext) currenttext.style.display = 'block'
-                    comicrender(storageElement)
+                    comicrender()
                     editbutton.innerHTML = '✏'
                     t = null
                     currentinput?.remove()
@@ -327,7 +342,7 @@ const Deliting = () => {
         const deleteb = v.querySelector('.deletecomic')
         deleteb?.addEventListener('click', () => {
             comics = comics.filter((_, i1) => i != i1)
-            comicrender(storageElement)
+            comicrender()
         })
     })
 }
@@ -341,18 +356,62 @@ const Addtocard = () => {
     storageElements.forEach((v, i) => {
         const addtocardbtn = v.querySelector('.addtocard')
         addtocardbtn?.addEventListener('click', () => {
-            card = [...card, comics[i]]
-            comicrender(cardElement)
+            card.push(comics[i])
+            if (cardElement)
+                cardElement.innerHTML = cardender(card)
         })
     })
 }
+
+
+/* -------------------------- Remove from card -------------------------- */
+const Removefromcard = () => {
+    cardElementpart = document.querySelectorAll('.cardElement');
+    console.log(cardElementpart);
+    cardElementpart.forEach((v, i) => {
+        const removebtn = v.querySelector('.remove');
+        removebtn?.addEventListener('click', () => {
+            console.log('button click');
+            card = card.filter((_, i1) => i1 !== i);
+            if (cardElement)
+                cardElement.innerHTML = cardender(card)
+        });
+    }
+    )
+}
+
+
 Addtocard()
 Deliting()
 Editing()
+Removefromcard()
 storageElement?.addEventListener('click', () => {
-    Addtocard()
     Deliting()
     Editing()
 })
 
+cardElement?.addEventListener('click', () => {
+    console.log('click');
+    Removefromcard()
+})
 
+
+const searchbtn = document.querySelector('.searchbtn')
+const resultElement = document.querySelector('.result')
+const searchinp: HTMLInputElement | null = document.querySelector('.searchinp')
+
+searchbtn?.addEventListener('click', () => {
+    if (searchinp && alertElement) {
+
+        if (!searchinp.value) {
+            alertElement.innerHTML = `please, enter text`
+            return 0
+        }
+
+        const tarray = comics.filter(v => v.authorName.toLowerCase() == searchinp.value.toLowerCase() || v.title.toLowerCase() == searchinp.value.toLowerCase() )
+        console.log(tarray);
+        
+        if (resultElement)
+            resultElement.innerHTML = cardender(tarray)
+    }
+})
