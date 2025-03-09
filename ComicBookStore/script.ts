@@ -100,6 +100,7 @@ class Comic {
 }
 
 let comics: Comic[] = []
+let card: Comic[] = []
 
 const comic1 = new Comic(
     "The Adventures of Superhero X",
@@ -140,30 +141,40 @@ const comic3 = new Comic(
 comics.push(comic1, comic2, comic3)
 
 const storageElement: HTMLDivElement | null = document.querySelector('.storage')
+const cardElement: HTMLDivElement | null = document.querySelector('.card')
 
-const comicrender = () => {
-    if (storageElement) {
-        storageElement.innerHTML = ''
-        for (let i = 0; i < comics.length; i++) {
-            storageElement.innerHTML += `<div class="storageElement">
-        <span> <p>📅 ${comics[i].year}</p> <button class="edityear"> ✏ </button> </span>
-        <span><h3>${comics[i].title}</h3> <button class="edittitle"> ✏ </button> </span>
-        <span><p>😸 ${comics[i].authorName}</p> <button class="editauthorName"> ✏ </button> </span>
-        <span><p>📢 ${comics[i].publisherName}</p> <button class="editpublisherName"> ✏ </button> </span>
-        <span><p>😎 ${comics[i].genre}</p> <button class="editgenre"> ✏ </button> </span>
-        <span><p>📖 ${comics[i].pages}</p> <button class="editpages"> ✏ </button> </span>
-        <span><p>💲 ${comics[i].price}</p> <button class="editprice"> ✏ </button> </span>
-        <span><p>〽 ${comics[i].discount}</p> <button class="editdiscount"> ✏ </button> </span>
-        <span><p>⏲ ${comics[i].timeAdded}</p> <button class="edittimeAdded"> ✏ </button> </span>
+const comicrender = (element: HTMLDivElement | null) => {
+    if (element) {
+        let classs: string
+        let length: number
+        if (element == storageElement) {
+            classs = 'storageElement'
+            length = comics.length
+        } else {
+            length = card.length
+            classs = 'card'
+        }
+        element.innerHTML = `<h2>${classs}</h2>`
+        for (let i = 0; i < length; i++) {
+            element.innerHTML += `<div class="${classs}">
+           ${ element == storageElement ?  `<button class='addtocard'> 🛒 </button>` : ''}
+        <span> <p>📅 ${comics[i].year}</p> <button> ✏ </button> </span>
+        <span><h3>${comics[i].title}</h3> <button> ✏ </button> </span>
+        <span><p>😸 ${comics[i].authorName}</p> <button> ✏ </button> </span>
+        <span><p>📢 ${comics[i].publisherName}</p> <button> ✏ </button> </span>
+        <span><p>😎 ${comics[i].genre}</p> <button> ✏ </button> </span>
+        <span><p>📖 ${comics[i].pages}</p> <button> ✏ </button> </span>
+        <span><p>💲 ${comics[i].price}</p> <button> ✏ </button> </span>
+        <span><p>〽 ${comics[i].discount}</p> <button> ✏ </button> </span>
+        <span><p>⏲ ${comics[i].timeAdded}</p> <button> ✏ </button> </span>
+        <button class='deletecomic'> delete </button>
         </div>`
         }
     }
 }
 
-comicrender()
+comicrender(storageElement)
 let storageElements = document.querySelectorAll('.storageElement')
-
-
 
 
 const addElement: HTMLButtonElement | null = document.querySelector('.addbutton')
@@ -222,7 +233,7 @@ addElement?.addEventListener('click', () => {
         const newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value)
 
         comics.push(newcomic)
-        comicrender()
+        comicrender(storageElement)
     }
 })
 
@@ -234,14 +245,14 @@ const removeallactiveeditings = () => {
     storageElements.forEach((v, i) => {
         const spans = v.querySelectorAll('span')
         spans?.forEach((v1, i1) => {
-            
-                const currenttext = v1.querySelector('p')
-                const currentinput: HTMLInputElement | null = v1.querySelector('input')
-                if (currentinput) {
-                    currentinput.remove()
-                }
-                if (currenttext) currenttext.style.display = 'block'
-            
+
+            const currenttext = v1.querySelector('p')
+            const currentinput: HTMLInputElement | null = v1.querySelector('input')
+            if (currentinput) {
+                currentinput.remove()
+            }
+            if (currenttext) currenttext.style.display = 'block'
+
         })
     })
 }
@@ -249,7 +260,6 @@ const removeallactiveeditings = () => {
 function Editing() {
     storageElements = document.querySelectorAll('.storageElement')
     storageElements.forEach((v, i) => {
-
         let t: HTMLButtonElement | null
         const spans = v.querySelectorAll('span')
         spans?.forEach((v1, i1) => {
@@ -263,11 +273,11 @@ function Editing() {
                     const createinput = document.createElement('input')
                     createinput['placeholder'] = currenttext.innerHTML
                     createinput.focus()
+                    editbutton.innerHTML = '✔'
                     v1.appendChild(createinput)
                     t = editbutton
                 } else if (t == editbutton) {
-
-                    const currentinput = v1.querySelector('input')                    
+                    const currentinput = v1.querySelector('input')
                     switch (i1) {
                         case 0:
                             comics[i].year = Number(currentinput?.value)
@@ -297,18 +307,52 @@ function Editing() {
                             comics[i].timeAdded = String(currentinput?.value)
                             break;
                     }
-                    currentinput?.remove()
                     if (currenttext) currenttext.style.display = 'block'
-                    comicrender()
+                    comicrender(storageElement)
+                    editbutton.innerHTML = '✏'
                     t = null
+                    currentinput?.remove()
                 }
             })
         })
     })
 
 }
+
+/* -------------------------- Deliting -------------------------- */
+
+const Deliting = () => {
+    storageElements = document.querySelectorAll('.storageElement')
+    storageElements.forEach((v, i) => {
+        const deleteb = v.querySelector('.deletecomic')
+        deleteb?.addEventListener('click', () => {
+            comics = comics.filter((_, i1) => i != i1)
+            comicrender(storageElement)
+        })
+    })
+}
+
+
+/* -------------------------- Add to card -------------------------- */
+
+
+const Addtocard = () => {
+    storageElements = document.querySelectorAll('.storageElement')
+    storageElements.forEach((v, i) => {
+        const addtocardbtn = v.querySelector('.addtocard')
+        addtocardbtn?.addEventListener('click', () => {
+            card = [...card, comics[i]]
+            comicrender(cardElement)
+        })
+    })
+}
+Addtocard()
+Deliting()
 Editing()
 storageElement?.addEventListener('click', () => {
-
+    Addtocard()
+    Deliting()
     Editing()
 })
+
+

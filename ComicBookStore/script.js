@@ -1,3 +1,12 @@
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var Comic = /** @class */ (function () {
     function Comic(title, authorName, publisherName, pages, genre, year, price, discount, timeAdded) {
         this._title = title;
@@ -103,20 +112,32 @@ var Comic = /** @class */ (function () {
     return Comic;
 }());
 var comics = [];
+var card = [];
 var comic1 = new Comic("The Adventures of Superhero X", "John Doe", "ComicWorld", 120, "Action", 2021, 19.99, 0.1, String(Date.now()));
 var comic2 = new Comic("Mystery of the Lost Galaxy", "Jane Smith", "GalacticComics", 95, "Sci-Fi", 2020, 14.99, 0.2, String(Date.now()));
 var comic3 = new Comic("The Enchanted Forest", "Emily Johnson", "FantasyPress", 110, "Fantasy", 2022, 17.99, 0.15, String(Date.now()));
 comics.push(comic1, comic2, comic3);
 var storageElement = document.querySelector('.storage');
-var comicrender = function () {
-    if (storageElement) {
-        storageElement.innerHTML = '';
-        for (var i = 0; i < comics.length; i++) {
-            storageElement.innerHTML += "<div class=\"storageElement\">\n        <span> <p>\uD83D\uDCC5 ".concat(comics[i].year, "</p> <button class=\"edityear\"> \u270F </button> </span>\n        <span><h3>").concat(comics[i].title, "</h3> <button class=\"edittitle\"> \u270F </button> </span>\n        <span><p>\uD83D\uDE38 ").concat(comics[i].authorName, "</p> <button class=\"editauthorName\"> \u270F </button> </span>\n        <span><p>\uD83D\uDCE2 ").concat(comics[i].publisherName, "</p> <button class=\"editpublisherName\"> \u270F </button> </span>\n        <span><p>\uD83D\uDE0E ").concat(comics[i].genre, "</p> <button class=\"editgenre\"> \u270F </button> </span>\n        <span><p>\uD83D\uDCD6 ").concat(comics[i].pages, "</p> <button class=\"editpages\"> \u270F </button> </span>\n        <span><p>\uD83D\uDCB2 ").concat(comics[i].price, "</p> <button class=\"editprice\"> \u270F </button> </span>\n        <span><p>\u303D ").concat(comics[i].discount, "</p> <button class=\"editdiscount\"> \u270F </button> </span>\n        <span><p>\u23F2 ").concat(comics[i].timeAdded, "</p> <button class=\"edittimeAdded\"> \u270F </button> </span>\n        </div>");
+var cardElement = document.querySelector('.card');
+var comicrender = function (element) {
+    if (element) {
+        var classs = void 0;
+        var length_1;
+        if (element == storageElement) {
+            classs = 'storageElement';
+            length_1 = comics.length;
+        }
+        else {
+            length_1 = card.length;
+            classs = 'card';
+        }
+        element.innerHTML = "<h2>".concat(classs, "</h2>");
+        for (var i = 0; i < length_1; i++) {
+            element.innerHTML += "<div class=\"".concat(classs, "\">\n            <button class='addtocard'> \uD83D\uDED2 </button>\n        <span> <p>\uD83D\uDCC5 ").concat(comics[i].year, "</p> <button> \u270F </button> </span>\n        <span><h3>").concat(comics[i].title, "</h3> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE38 ").concat(comics[i].authorName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCE2 ").concat(comics[i].publisherName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE0E ").concat(comics[i].genre, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCD6 ").concat(comics[i].pages, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCB2 ").concat(comics[i].price, "</p> <button> \u270F </button> </span>\n        <span><p>\u303D ").concat(comics[i].discount, "</p> <button> \u270F </button> </span>\n        <span><p>\u23F2 ").concat(comics[i].timeAdded, "</p> <button> \u270F </button> </span>\n        <button class='deletecomic'> delete </button>\n        </div>");
         }
     }
 };
-comicrender();
+comicrender(storageElement);
 var storageElements = document.querySelectorAll('.storageElement');
 var addElement = document.querySelector('.addbutton');
 var alertElement = document.querySelector('.alert');
@@ -167,7 +188,7 @@ addElement === null || addElement === void 0 ? void 0 : addElement.addEventListe
         alertElement.innerHTML = "";
         var newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value);
         comics.push(newcomic);
-        comicrender();
+        comicrender(storageElement);
     }
 });
 /* -------------------------- Editing -------------------------- */
@@ -202,12 +223,12 @@ function Editing() {
                     var createinput = document.createElement('input');
                     createinput['placeholder'] = currenttext.innerHTML;
                     createinput.focus();
+                    editbutton.innerHTML = '✔';
                     v1.appendChild(createinput);
                     t = editbutton;
                 }
                 else if (t == editbutton) {
                     var currentinput = v1.querySelector('input');
-                    console.log(currentinput);
                     switch (i1) {
                         case 0:
                             comics[i].year = Number(currentinput === null || currentinput === void 0 ? void 0 : currentinput.value);
@@ -237,17 +258,44 @@ function Editing() {
                             comics[i].timeAdded = String(currentinput === null || currentinput === void 0 ? void 0 : currentinput.value);
                             break;
                     }
-                    currentinput === null || currentinput === void 0 ? void 0 : currentinput.remove();
                     if (currenttext)
                         currenttext.style.display = 'block';
-                    comicrender();
+                    comicrender(storageElement);
+                    editbutton.innerHTML = '✏';
                     t = null;
+                    currentinput === null || currentinput === void 0 ? void 0 : currentinput.remove();
                 }
             });
         });
     });
 }
+/* -------------------------- Deliting -------------------------- */
+var Deliting = function () {
+    storageElements = document.querySelectorAll('.storageElement');
+    storageElements.forEach(function (v, i) {
+        var deleteb = v.querySelector('.deletecomic');
+        deleteb === null || deleteb === void 0 ? void 0 : deleteb.addEventListener('click', function () {
+            comics = comics.filter(function (_, i1) { return i != i1; });
+            comicrender(storageElement);
+        });
+    });
+};
+/* -------------------------- Add to card -------------------------- */
+var Addtocard = function () {
+    storageElements = document.querySelectorAll('.storageElement');
+    storageElements.forEach(function (v, i) {
+        var addtocardbtn = v.querySelector('.addtocard');
+        addtocardbtn === null || addtocardbtn === void 0 ? void 0 : addtocardbtn.addEventListener('click', function () {
+            card = __spreadArray(__spreadArray([], card, true), [comics[i]], false);
+            comicrender(cardElement);
+        });
+    });
+};
+Addtocard();
+Deliting();
 Editing();
 storageElement === null || storageElement === void 0 ? void 0 : storageElement.addEventListener('click', function () {
+    Addtocard();
+    Deliting();
     Editing();
 });
