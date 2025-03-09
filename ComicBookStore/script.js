@@ -119,12 +119,12 @@ var comicrender = function () {
         }
     }
 };
-var cardender = function (array) {
+var cardender = function (array, bool) {
     var answer = '';
     if (cardElement) {
         cardElement.innerHTML = '';
         for (var i = 0; i < array.length; i++) {
-            answer += "<div class=\"cardElement\">\n         <p>\uD83D\uDCC5 ".concat(array[i].year, "</p> \n        <h3>").concat(array[i].title, "</h3> \n        <p>\uD83D\uDE38 ").concat(array[i].authorName, "</p> \n        <p>\uD83D\uDCE2 ").concat(array[i].publisherName, "</p> \n        <p>\uD83D\uDE0E ").concat(array[i].genre, "</p> \n        <p>\uD83D\uDCD6 ").concat(array[i].pages, "</p> \n        <p>\uD83D\uDCB2 ").concat(array[i].price, "</p> \n        <p>\u303D ").concat(array[i].discount, "</p> \n        <p>\u23F2 ").concat(array[i].timeAdded, "</p> \n        <button class='remove'> remove from card </button>\n        </div>");
+            answer += "<div class=\"cardElement\">\n         <p>\uD83D\uDCC5 ".concat(array[i].year, "</p> \n        <h3>").concat(array[i].title, "</h3> \n        <p>\uD83D\uDE38 ").concat(array[i].authorName, "</p> \n        <p>\uD83D\uDCE2 ").concat(array[i].publisherName, "</p> \n        <p>\uD83D\uDE0E ").concat(array[i].genre, "</p> \n        <p>\uD83D\uDCD6 ").concat(array[i].pages, "</p> \n        <p>\uD83D\uDCB2 ").concat(array[i].price, "</p> \n        <p>\u303D ").concat(array[i].discount, "</p> \n        <p>\u23F2 ").concat(array[i].timeAdded, "</p> \n       ").concat(bool && "<button class='remove'> remove from card </button>", "\n        </div>");
         }
     }
     return answer;
@@ -142,6 +142,11 @@ var yearElement = document.querySelector('#year');
 var priceElement = document.querySelector('#price');
 var discountElement = document.querySelector('#discount');
 var timeAddedElement = document.querySelector('#timeAdded');
+var updateAll = function () {
+    Addtocard();
+    Removefromcard();
+    Editing();
+};
 /* -------------------------- Adding -------------------------- */
 addElement === null || addElement === void 0 ? void 0 : addElement.addEventListener('click', function () {
     if (titleElement && authorNameElement && publisherNameElement && pagesElement && genreElement && yearElement && priceElement && discountElement && timeAddedElement && alertElement) {
@@ -181,6 +186,7 @@ addElement === null || addElement === void 0 ? void 0 : addElement.addEventListe
         var newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value);
         comics.push(newcomic);
         comicrender();
+        updateAll();
     }
 });
 /* -------------------------- Editing -------------------------- */
@@ -199,7 +205,7 @@ var removeallactiveeditings = function () {
         });
     });
 };
-function Editing() {
+var Editing = function () {
     storageElements = document.querySelectorAll('.storageElement');
     storageElements.forEach(function (v, i) {
         var t;
@@ -256,22 +262,28 @@ function Editing() {
                     editbutton.innerHTML = '✏';
                     t = null;
                     currentinput === null || currentinput === void 0 ? void 0 : currentinput.remove();
+                    updateAll();
                 }
             });
         });
     });
-}
+};
+Editing();
 /* -------------------------- Deliting -------------------------- */
 var Deliting = function () {
-    storageElements = document.querySelectorAll('.storageElement');
     storageElements.forEach(function (v, i) {
         var deleteb = v.querySelector('.deletecomic');
         deleteb === null || deleteb === void 0 ? void 0 : deleteb.addEventListener('click', function () {
             comics = comics.filter(function (_, i1) { return i != i1; });
+            storageElements = document.querySelectorAll('.storageElement');
             comicrender();
+            setTimeout(function () {
+                Deliting();
+            }, 10);
         });
     });
 };
+Deliting();
 /* -------------------------- Add to card -------------------------- */
 var Addtocard = function () {
     storageElements = document.querySelectorAll('.storageElement');
@@ -279,11 +291,14 @@ var Addtocard = function () {
         var addtocardbtn = v.querySelector('.addtocard');
         addtocardbtn === null || addtocardbtn === void 0 ? void 0 : addtocardbtn.addEventListener('click', function () {
             card.push(comics[i]);
+            console.log(comics[i]);
             if (cardElement)
-                cardElement.innerHTML = cardender(card);
+                cardElement.innerHTML = cardender(card, true);
+            updateAll();
         });
     });
 };
+Addtocard();
 /* -------------------------- Remove from card -------------------------- */
 var Removefromcard = function () {
     cardElementpart = document.querySelectorAll('.cardElement');
@@ -294,22 +309,12 @@ var Removefromcard = function () {
             console.log('button click');
             card = card.filter(function (_, i1) { return i1 !== i; });
             if (cardElement)
-                cardElement.innerHTML = cardender(card);
+                cardElement.innerHTML = cardender(card, true);
+            updateAll();
         });
     });
 };
-Addtocard();
-Deliting();
-Editing();
 Removefromcard();
-storageElement === null || storageElement === void 0 ? void 0 : storageElement.addEventListener('click', function () {
-    Deliting();
-    Editing();
-});
-cardElement === null || cardElement === void 0 ? void 0 : cardElement.addEventListener('click', function () {
-    console.log('click');
-    Removefromcard();
-});
 var searchbtn = document.querySelector('.searchbtn');
 var resultElement = document.querySelector('.result');
 var searchinp = document.querySelector('.searchinp');
@@ -322,6 +327,6 @@ searchbtn === null || searchbtn === void 0 ? void 0 : searchbtn.addEventListener
         var tarray = comics.filter(function (v) { return v.authorName.toLowerCase() == searchinp.value.toLowerCase() || v.title.toLowerCase() == searchinp.value.toLowerCase(); });
         console.log(tarray);
         if (resultElement)
-            resultElement.innerHTML = cardender(tarray);
+            resultElement.innerHTML = cardender(tarray, false);
     }
 });

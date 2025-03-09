@@ -166,7 +166,7 @@ const comicrender = () => {
     }
 }
 
-const cardender = (array: Comic[]) : string=> {
+const cardender = (array: Comic[], bool: boolean): string => {
     let answer: string = ''
     if (cardElement) {
         cardElement.innerHTML = ''
@@ -181,7 +181,7 @@ const cardender = (array: Comic[]) : string=> {
         <p>💲 ${array[i].price}</p> 
         <p>〽 ${array[i].discount}</p> 
         <p>⏲ ${array[i].timeAdded}</p> 
-        <button class='remove'> remove from card </button>
+       ${bool && `<button class='remove'> remove from card </button>`}
         </div>`
         }
     }
@@ -204,6 +204,16 @@ const yearElement: HTMLInputElement | null = document.querySelector('#year')
 const priceElement: HTMLInputElement | null = document.querySelector('#price')
 const discountElement: HTMLInputElement | null = document.querySelector('#discount')
 const timeAddedElement: HTMLInputElement | null = document.querySelector('#timeAdded')
+
+
+const updateAll = () => {
+
+    
+    Addtocard()
+    Removefromcard()
+    Editing()
+
+}
 
 
 /* -------------------------- Adding -------------------------- */
@@ -249,6 +259,7 @@ addElement?.addEventListener('click', () => {
 
         comics.push(newcomic)
         comicrender()
+        updateAll()
     }
 })
 
@@ -272,7 +283,7 @@ const removeallactiveeditings = () => {
     })
 }
 
-function Editing() {
+const Editing = () => {
     storageElements = document.querySelectorAll('.storageElement')
     storageElements.forEach((v, i) => {
         let t: HTMLButtonElement | null
@@ -327,6 +338,7 @@ function Editing() {
                     editbutton.innerHTML = '✏'
                     t = null
                     currentinput?.remove()
+                    updateAll()
                 }
             })
         })
@@ -334,20 +346,25 @@ function Editing() {
 
 }
 
+Editing()
 /* -------------------------- Deliting -------------------------- */
 
+
 const Deliting = () => {
-    storageElements = document.querySelectorAll('.storageElement')
     storageElements.forEach((v, i) => {
         const deleteb = v.querySelector('.deletecomic')
         deleteb?.addEventListener('click', () => {
             comics = comics.filter((_, i1) => i != i1)
+            storageElements = document.querySelectorAll('.storageElement')
             comicrender()
+            setTimeout(() => {
+                Deliting()
+            }, 10);
         })
     })
 }
 
-
+Deliting()
 /* -------------------------- Add to card -------------------------- */
 
 
@@ -357,14 +374,19 @@ const Addtocard = () => {
         const addtocardbtn = v.querySelector('.addtocard')
         addtocardbtn?.addEventListener('click', () => {
             card.push(comics[i])
+            console.log(comics[i])
+
             if (cardElement)
-                cardElement.innerHTML = cardender(card)
+                cardElement.innerHTML = cardender(card, true)
+            updateAll()
         })
     })
 }
 
-
+Addtocard()
 /* -------------------------- Remove from card -------------------------- */
+
+
 const Removefromcard = () => {
     cardElementpart = document.querySelectorAll('.cardElement');
     console.log(cardElementpart);
@@ -374,27 +396,14 @@ const Removefromcard = () => {
             console.log('button click');
             card = card.filter((_, i1) => i1 !== i);
             if (cardElement)
-                cardElement.innerHTML = cardender(card)
-        });
+                cardElement.innerHTML = cardender(card, true)
+            updateAll()
+        })
     }
     )
 }
 
-
-Addtocard()
-Deliting()
-Editing()
 Removefromcard()
-storageElement?.addEventListener('click', () => {
-    Deliting()
-    Editing()
-})
-
-cardElement?.addEventListener('click', () => {
-    console.log('click');
-    Removefromcard()
-})
-
 
 const searchbtn = document.querySelector('.searchbtn')
 const resultElement = document.querySelector('.result')
@@ -408,10 +417,10 @@ searchbtn?.addEventListener('click', () => {
             return 0
         }
 
-        const tarray = comics.filter(v => v.authorName.toLowerCase() == searchinp.value.toLowerCase() || v.title.toLowerCase() == searchinp.value.toLowerCase() )
+        const tarray = comics.filter(v => v.authorName.toLowerCase() == searchinp.value.toLowerCase() || v.title.toLowerCase() == searchinp.value.toLowerCase())
         console.log(tarray);
-        
+
         if (resultElement)
-            resultElement.innerHTML = cardender(tarray)
+            resultElement.innerHTML = cardender(tarray, false)
     }
 })
