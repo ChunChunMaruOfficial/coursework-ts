@@ -1,3 +1,12 @@
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var Comic = /** @class */ (function () {
     function Comic(title, authorName, publisherName, pages, genre, year, price, discount, timeAdded) {
         this._title = title;
@@ -107,15 +116,25 @@ var card = [];
 var comic1 = new Comic("The Adventures of Superhero X", "John Doe", "ComicWorld", 120, "Action", 2021, 19.99, 0.1, String(Date.now()));
 var comic2 = new Comic("Mystery of the Lost Galaxy", "Jane Smith", "GalacticComics", 95, "Sci-Fi", 2020, 14.99, 0.2, String(Date.now()));
 var comic3 = new Comic("The Enchanted Forest", "Emily Johnson", "FantasyPress", 110, "Fantasy", 2022, 17.99, 0.15, String(Date.now()));
-comics.push(comic1, comic2, comic3);
+var comic4 = new Comic("Adventures in the Pixelated World", "Michael Brown", "TechComics", 120, "Adventure", 2019, 12.49, 0.1, String(Date.now()));
+var comic5 = new Comic("Underwater Kingdom", "Laura Wilson", "OceanicPublishing", 105, "Fantasy", 2021, 16.99, 0.18, String(Date.now()));
+var comic6 = new Comic("Chronicles of the Cyber Realm", "Kevin Davis", "CyberComics", 130, "Sci-Fi", 2023, 19.49, 0.25, String(Date.now()));
+var comic7 = new Comic("Tales of the Forgotten Era", "Sophia Moore", "HistoricComics", 98, "History", 2018, 13.79, 0.12, String(Date.now()));
+var comic8 = new Comic("The Cosmic Voyage", "Daniel Martinez", "StarComics", 115, "Sci-Fi", 2020, 15.99, 0.22, String(Date.now()));
+var comic9 = new Comic("Legends of the Mystic Isles", "Emma Taylor", "IslandComics", 92, "Fantasy", 2022, 14.49, 0.2, String(Date.now()));
+var comic10 = new Comic("Realm of the Shadow Beasts", "Olivia Anderson", "DarkFantasyPress", 100, "Dark Fantasy", 2023, 18.99, 0.27, String(Date.now()));
+var comic11 = new Comic("The Secret of the Iron Fortress", "William Lee", "SteampunkComics", 112, "Steampunk", 2019, 16.49, 0.15, String(Date.now()));
+var comic12 = new Comic("Worlds Beyond Imagination", "Isabella Harris", "DreamComics", 124, "Sci-Fi", 2021, 17.49, 0.2, String(Date.now()));
+var comic13 = new Comic("The Cursed Mirror", "James White", "MysteryHouse", 87, "Mystery", 2022, 14.99, 0.18, String(Date.now()));
+comics.push(comic1, comic2, comic3, comic4, comic5, comic6, comic7, comic8, comic9, comic10, comic11, comic12, comic13);
 var storageElement = document.querySelector('.storageelements');
 var cardElement = document.querySelector('.cardelements');
 var cardElementpart = document.querySelectorAll('.cardElement');
-var comicrender = function () {
+var comicrender = function (array) {
     if (storageElement) {
         storageElement.innerHTML = '';
-        for (var i = 0; i < comics.length; i++) {
-            storageElement.innerHTML += "<div class=\"storageElement\">\n           <button class='addtocard'> \uD83D\uDED2 </button>\n        <span> <p>\uD83D\uDCC5 ".concat(comics[i].year, "</p> <button> \u270F </button> </span>\n        <span><h3>").concat(comics[i].title, "</h3> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE38 ").concat(comics[i].authorName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCE2 ").concat(comics[i].publisherName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE0E ").concat(comics[i].genre, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCD6 ").concat(comics[i].pages, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCB2 ").concat(comics[i].price, "</p> <button> \u270F </button> </span>\n        <span><p>\u303D ").concat(comics[i].discount, "</p> <button> \u270F </button> </span>\n        <span><p>\u23F2 ").concat(comics[i].timeAdded, "</p> <button> \u270F </button> </span>\n        <button class='deletecomic'> delete </button>\n        </div>");
+        for (var i = 0; i < array.length; i++) {
+            storageElement.innerHTML += "<div class=\"storageElement\">\n           <button class='addtocard'> \uD83D\uDED2 </button>\n        <span> <p>\uD83D\uDCC5 ".concat(array[i].year, "</p> <button> \u270F </button> </span>\n        <span><h3>").concat(array[i].title, "</h3> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE38 ").concat(array[i].authorName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCE2 ").concat(array[i].publisherName, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDE0E ").concat(array[i].genre, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCD6 ").concat(array[i].pages, "</p> <button> \u270F </button> </span>\n        <span><p>\uD83D\uDCB2 ").concat(array[i].price, "</p> <button> \u270F </button> </span>\n        <span><p>\u303D ").concat(array[i].discount, "</p> <button> \u270F </button> </span>\n        <span><p>\u23F2 ").concat(array[i].timeAdded, "</p> <button> \u270F </button> </span>\n        <button class='deletecomic'> delete </button>\n        </div>");
         }
     }
 };
@@ -129,7 +148,7 @@ var cardender = function (array, bool) {
     }
     return answer;
 };
-comicrender();
+comicrender(comics);
 var storageElements = document.querySelectorAll('.storageElement');
 var addElement = document.querySelector('.addbutton');
 var alertElement = document.querySelector('.alert');
@@ -143,6 +162,9 @@ var priceElement = document.querySelector('#price');
 var discountElement = document.querySelector('#discount');
 var timeAddedElement = document.querySelector('#timeAdded');
 var updateAll = function () {
+    storageElements = document.querySelectorAll('.storageElement');
+    cardElementpart = document.querySelectorAll('.cardElement');
+    Deliting();
     Addtocard();
     Removefromcard();
     Editing();
@@ -185,7 +207,7 @@ addElement === null || addElement === void 0 ? void 0 : addElement.addEventListe
         alertElement.innerHTML = "";
         var newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value);
         comics.push(newcomic);
-        comicrender();
+        comicrender(comics);
         updateAll();
     }
 });
@@ -258,11 +280,13 @@ var Editing = function () {
                     }
                     if (currenttext)
                         currenttext.style.display = 'block';
-                    comicrender();
+                    comicrender(comics);
                     editbutton.innerHTML = '✏';
                     t = null;
                     currentinput === null || currentinput === void 0 ? void 0 : currentinput.remove();
-                    updateAll();
+                    setTimeout(function () {
+                        updateAll();
+                    }, 10);
                 }
             });
         });
@@ -275,10 +299,9 @@ var Deliting = function () {
         var deleteb = v.querySelector('.deletecomic');
         deleteb === null || deleteb === void 0 ? void 0 : deleteb.addEventListener('click', function () {
             comics = comics.filter(function (_, i1) { return i != i1; });
-            storageElements = document.querySelectorAll('.storageElement');
-            comicrender();
+            comicrender(comics);
             setTimeout(function () {
-                Deliting();
+                updateAll();
             }, 10);
         });
     });
@@ -286,31 +309,35 @@ var Deliting = function () {
 Deliting();
 /* -------------------------- Add to card -------------------------- */
 var Addtocard = function () {
-    storageElements = document.querySelectorAll('.storageElement');
     storageElements.forEach(function (v, i) {
         var addtocardbtn = v.querySelector('.addtocard');
         addtocardbtn === null || addtocardbtn === void 0 ? void 0 : addtocardbtn.addEventListener('click', function () {
-            card.push(comics[i]);
-            console.log(comics[i]);
+            card = __spreadArray(__spreadArray([], card, true), [comics[i]], false);
+            console.log(card);
             if (cardElement)
                 cardElement.innerHTML = cardender(card, true);
-            updateAll();
+            setTimeout(function () {
+                cardElementpart = document.querySelectorAll('.cardElement');
+                Removefromcard();
+            }, 10);
         });
     });
 };
 Addtocard();
 /* -------------------------- Remove from card -------------------------- */
 var Removefromcard = function () {
-    cardElementpart = document.querySelectorAll('.cardElement');
-    console.log(cardElementpart);
+    console.log('called');
     cardElementpart.forEach(function (v, i) {
         var removebtn = v.querySelector('.remove');
         removebtn === null || removebtn === void 0 ? void 0 : removebtn.addEventListener('click', function () {
             console.log('button click');
-            card = card.filter(function (_, i1) { return i1 !== i; });
+            card = card.filter(function (v1) { return v1 != card[i]; });
+            console.log(card);
             if (cardElement)
                 cardElement.innerHTML = cardender(card, true);
-            updateAll();
+            setTimeout(function () {
+                updateAll();
+            }, 10);
         });
     });
 };
@@ -329,4 +356,54 @@ searchbtn === null || searchbtn === void 0 ? void 0 : searchbtn.addEventListener
         if (resultElement)
             resultElement.innerHTML = cardender(tarray, false);
     }
+});
+var genresElement = document.querySelector('.genres');
+var selectElement = document.querySelector('#genres');
+var newproductsElement = document.querySelector('.newproducts');
+var topsalesElement = document.querySelector('.topsales');
+var popularityElement = document.querySelector('.popularity');
+var authorsElement = document.querySelector('.authors');
+// genresElement?.addEventListener('click', () => {
+//     let tgenres: { name: string, count: number }[] = []
+//     for (let i = 0; i < comics.length; i++) {
+//         let coin: boolean = false
+//         for (let i1 = 0; i1 < tgenres.length; i1++) {
+//             comics[i].genre == tgenres[i1].name ? (coin = true, tgenres[i1].count++) : ''
+//         }
+//         if (!coin) {
+//             tgenres = [...tgenres, { name: comics[i].genre, count: 1 }]
+//         }
+//     }
+//     tgenres.sort((a, b) => b.count - a.count)
+//     let t2array: Comic[] = []
+//     for (let i = 0; i < comics.length; i++) {
+//         comics[i].genre == tgenres[0].name ? t2array = [...t2array, comics[i]] : ''
+//     }
+//     comicrender(t2array)
+// })
+genresElement === null || genresElement === void 0 ? void 0 : genresElement.addEventListener('click', function () {
+    var t2array = [];
+    if (selectElement) {
+        for (var i = 0; i < comics.length; i++) {
+            comics[i].genre == selectElement.value ? t2array = __spreadArray(__spreadArray([], t2array, true), [comics[i]], false) : '';
+        }
+    }
+    comicrender(t2array);
+});
+newproductsElement === null || newproductsElement === void 0 ? void 0 : newproductsElement.addEventListener('click', function () {
+    var max = 0;
+    for (var i = 0; i < comics.length; i++) {
+        comics[i].year > max ? max = comics[i].year : '';
+    }
+    var t2array = [];
+    for (var i = 0; i < comics.length; i++) {
+        comics[i].year == max ? t2array = __spreadArray(__spreadArray([], t2array, true), [comics[i]], false) : '';
+    }
+    comicrender(t2array);
+});
+topsalesElement === null || topsalesElement === void 0 ? void 0 : topsalesElement.addEventListener('click', function () {
+    var t2array = comics;
+    t2array.sort(function (a, b) { return a.price - b.price; });
+    t2array.length = 5;
+    comicrender(t2array);
 });

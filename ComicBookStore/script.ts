@@ -138,28 +138,149 @@ const comic3 = new Comic(
     String(Date.now())
 );
 
-comics.push(comic1, comic2, comic3)
+const comic4 = new Comic(
+    "Adventures in the Pixelated World",
+    "Michael Brown",
+    "TechComics",
+    120,
+    "Adventure",
+    2019,
+    12.49,
+    0.1,
+    String(Date.now())
+);
+
+const comic5 = new Comic(
+    "Underwater Kingdom",
+    "Laura Wilson",
+    "OceanicPublishing",
+    105,
+    "Fantasy",
+    2021,
+    16.99,
+    0.18,
+    String(Date.now())
+);
+
+const comic6 = new Comic(
+    "Chronicles of the Cyber Realm",
+    "Kevin Davis",
+    "CyberComics",
+    130,
+    "Sci-Fi",
+    2023,
+    19.49,
+    0.25,
+    String(Date.now())
+);
+
+const comic7 = new Comic(
+    "Tales of the Forgotten Era",
+    "Sophia Moore",
+    "HistoricComics",
+    98,
+    "History",
+    2018,
+    13.79,
+    0.12,
+    String(Date.now())
+);
+
+const comic8 = new Comic(
+    "The Cosmic Voyage",
+    "Daniel Martinez",
+    "StarComics",
+    115,
+    "Sci-Fi",
+    2020,
+    15.99,
+    0.22,
+    String(Date.now())
+);
+
+const comic9 = new Comic(
+    "Legends of the Mystic Isles",
+    "Emma Taylor",
+    "IslandComics",
+    92,
+    "Fantasy",
+    2022,
+    14.49,
+    0.2,
+    String(Date.now())
+);
+
+const comic10 = new Comic(
+    "Realm of the Shadow Beasts",
+    "Olivia Anderson",
+    "DarkFantasyPress",
+    100,
+    "Dark Fantasy",
+    2023,
+    18.99,
+    0.27,
+    String(Date.now())
+);
+
+const comic11 = new Comic(
+    "The Secret of the Iron Fortress",
+    "William Lee",
+    "SteampunkComics",
+    112,
+    "Steampunk",
+    2019,
+    16.49,
+    0.15,
+    String(Date.now())
+);
+
+const comic12 = new Comic(
+    "Worlds Beyond Imagination",
+    "Isabella Harris",
+    "DreamComics",
+    124,
+    "Sci-Fi",
+    2021,
+    17.49,
+    0.2,
+    String(Date.now())
+);
+
+const comic13 = new Comic(
+    "The Cursed Mirror",
+    "James White",
+    "MysteryHouse",
+    87,
+    "Mystery",
+    2022,
+    14.99,
+    0.18,
+    String(Date.now())
+);
+
+
+comics.push(comic1, comic2, comic3, comic4, comic5, comic6, comic7, comic8, comic9, comic10, comic11, comic12, comic13)
 
 const storageElement: HTMLDivElement | null = document.querySelector('.storageelements')
 const cardElement: HTMLDivElement | null = document.querySelector('.cardelements')
 let cardElementpart = document.querySelectorAll('.cardElement')
 
 
-const comicrender = () => {
+const comicrender = (array: Comic[]) => {
     if (storageElement) {
         storageElement.innerHTML = ''
-        for (let i = 0; i < comics.length; i++) {
+        for (let i = 0; i < array.length; i++) {
             storageElement.innerHTML += `<div class="storageElement">
            <button class='addtocard'> 🛒 </button>
-        <span> <p>📅 ${comics[i].year}</p> <button> ✏ </button> </span>
-        <span><h3>${comics[i].title}</h3> <button> ✏ </button> </span>
-        <span><p>😸 ${comics[i].authorName}</p> <button> ✏ </button> </span>
-        <span><p>📢 ${comics[i].publisherName}</p> <button> ✏ </button> </span>
-        <span><p>😎 ${comics[i].genre}</p> <button> ✏ </button> </span>
-        <span><p>📖 ${comics[i].pages}</p> <button> ✏ </button> </span>
-        <span><p>💲 ${comics[i].price}</p> <button> ✏ </button> </span>
-        <span><p>〽 ${comics[i].discount}</p> <button> ✏ </button> </span>
-        <span><p>⏲ ${comics[i].timeAdded}</p> <button> ✏ </button> </span>
+        <span> <p>📅 ${array[i].year}</p> <button> ✏ </button> </span>
+        <span><h3>${array[i].title}</h3> <button> ✏ </button> </span>
+        <span><p>😸 ${array[i].authorName}</p> <button> ✏ </button> </span>
+        <span><p>📢 ${array[i].publisherName}</p> <button> ✏ </button> </span>
+        <span><p>😎 ${array[i].genre}</p> <button> ✏ </button> </span>
+        <span><p>📖 ${array[i].pages}</p> <button> ✏ </button> </span>
+        <span><p>💲 ${array[i].price}</p> <button> ✏ </button> </span>
+        <span><p>〽 ${array[i].discount}</p> <button> ✏ </button> </span>
+        <span><p>⏲ ${array[i].timeAdded}</p> <button> ✏ </button> </span>
         <button class='deletecomic'> delete </button>
         </div>`
         }
@@ -188,7 +309,7 @@ const cardender = (array: Comic[], bool: boolean): string => {
     return answer
 }
 
-comicrender()
+comicrender(comics)
 let storageElements = document.querySelectorAll('.storageElement')
 
 
@@ -207,8 +328,9 @@ const timeAddedElement: HTMLInputElement | null = document.querySelector('#timeA
 
 
 const updateAll = () => {
-
-    
+    storageElements = document.querySelectorAll('.storageElement')
+    cardElementpart = document.querySelectorAll('.cardElement');
+    Deliting()
     Addtocard()
     Removefromcard()
     Editing()
@@ -258,7 +380,7 @@ addElement?.addEventListener('click', () => {
         const newcomic = new Comic(titleElement.value, authorNameElement.value, publisherNameElement.value, Number(pagesElement.value), genreElement.value, Number(yearElement.value), Number(priceElement.value), priceElement.value ? Number(priceElement.value) : 0, timeAddedElement.value)
 
         comics.push(newcomic)
-        comicrender()
+        comicrender(comics)
         updateAll()
     }
 })
@@ -334,11 +456,13 @@ const Editing = () => {
                             break;
                     }
                     if (currenttext) currenttext.style.display = 'block'
-                    comicrender()
+                    comicrender(comics)
                     editbutton.innerHTML = '✏'
                     t = null
                     currentinput?.remove()
-                    updateAll()
+                    setTimeout(() => {
+                        updateAll()
+                    }, 10);
                 }
             })
         })
@@ -349,16 +473,15 @@ const Editing = () => {
 Editing()
 /* -------------------------- Deliting -------------------------- */
 
-
 const Deliting = () => {
     storageElements.forEach((v, i) => {
         const deleteb = v.querySelector('.deletecomic')
         deleteb?.addEventListener('click', () => {
             comics = comics.filter((_, i1) => i != i1)
-            storageElements = document.querySelectorAll('.storageElement')
-            comicrender()
+
+            comicrender(comics)
             setTimeout(() => {
-                Deliting()
+                updateAll()
             }, 10);
         })
     })
@@ -369,16 +492,19 @@ Deliting()
 
 
 const Addtocard = () => {
-    storageElements = document.querySelectorAll('.storageElement')
     storageElements.forEach((v, i) => {
         const addtocardbtn = v.querySelector('.addtocard')
         addtocardbtn?.addEventListener('click', () => {
-            card.push(comics[i])
-            console.log(comics[i])
+            card = [...card, comics[i]]
+            console.log(card)
 
             if (cardElement)
                 cardElement.innerHTML = cardender(card, true)
-            updateAll()
+            setTimeout(() => {
+                cardElementpart = document.querySelectorAll('.cardElement');
+                Removefromcard()
+            }, 10);
+
         })
     })
 }
@@ -388,16 +514,20 @@ Addtocard()
 
 
 const Removefromcard = () => {
-    cardElementpart = document.querySelectorAll('.cardElement');
-    console.log(cardElementpart);
+    console.log('called');
+
     cardElementpart.forEach((v, i) => {
         const removebtn = v.querySelector('.remove');
         removebtn?.addEventListener('click', () => {
             console.log('button click');
-            card = card.filter((_, i1) => i1 !== i);
+            card = card.filter((v1) => v1 != card[i]);
+            console.log(card);
+
             if (cardElement)
                 cardElement.innerHTML = cardender(card, true)
-            updateAll()
+            setTimeout(() => {
+                updateAll()
+            }, 10);
         })
     }
     )
@@ -423,4 +553,43 @@ searchbtn?.addEventListener('click', () => {
         if (resultElement)
             resultElement.innerHTML = cardender(tarray, false)
     }
+})
+
+const genresElement: HTMLButtonElement | null = document.querySelector('.genres')
+const selectElement: HTMLSelectElement | null = document.querySelector('#genres')
+const newproductsElement: HTMLButtonElement | null = document.querySelector('.newproducts')
+const topsalesElement: HTMLButtonElement | null = document.querySelector('.topsales')
+
+genresElement?.addEventListener('click', () => {
+    let t2array: Comic[] = []
+    if (selectElement) {
+        for (let i = 0; i < comics.length; i++) {
+            comics[i].genre == selectElement.value ? t2array = [...t2array, comics[i]] : ''
+        }
+    }
+    comicrender(t2array)
+
+})
+
+
+
+newproductsElement?.addEventListener('click', () => {
+    let max: number = 0
+    for (let i = 0; i < comics.length; i++) {
+        comics[i].year > max ? max = comics[i].year : ''
+    }
+    let t2array: Comic[] = []
+    for (let i = 0; i < comics.length; i++) {
+        comics[i].year == max ? t2array = [...t2array, comics[i]] : ''
+    }
+    comicrender(t2array)
+
+})
+topsalesElement?.addEventListener('click', () => {
+
+    let t2array: Comic[] = comics
+    t2array.sort((a, b) => a.price - b.price)
+    t2array.length = 5
+    comicrender(t2array)
+
 })

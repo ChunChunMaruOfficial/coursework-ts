@@ -19,7 +19,7 @@ body {
     flex-direction: column;
     flex-wrap: nowrap;
 }
-
+.options,
 span {
     display: flex;
     flex-direction: row;
@@ -65,13 +65,20 @@ button:hover {
 .add,
 .storage,
 .card,
+.filters,
 .storage>*:not(.storage>h2) {
-    width: max-content;
+    max-width: 95vw;
     margin: 16px;
     padding: 16px;
     border-radius: 12px;
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.storageElement{
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    border-radius: 10px;
 }
 
 .storage {
@@ -107,10 +114,45 @@ header{
     flex-direction: row;
     justify-content: center;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .wrapper{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.filters select {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.filters button {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #0078d4;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filters button:hover {
+    background-color: #005ea8;
 }

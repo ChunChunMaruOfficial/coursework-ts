@@ -9,23 +9,44 @@
 </head>
 
 <body>
-    <header><input type="text" placeholder="enter a title or author of comic" class="searchinp"><button class="searchbtn">🔍</button></header>
+    <header><input type="text" placeholder="enter a title or author of comic" class="searchinp"><button
+            class="searchbtn">🔍</button></header>
     <h1 class="alert"></h1>
-<div class="result"></div>
+    <div class="result"></div>
     <div class="wrapper">
-        <div class="add">
-            <h2>Add new Comic</h2>
-            <div>
-                <input type="text" id="title" placeholder="title">
-                <input type="text" id="authorName" placeholder="author name">
-                <input type="text" id="publisherName" placeholder="publisher name">
-                <input type="number" id="pages" placeholder="pages">
-                <input type="text" id="genre" placeholder="genre">
-                <input type="number" id="year" placeholder="year">
-                <input type="number" id="price" placeholder="price">
-                <input type="number" id="discount" placeholder="discount (optional)">
-                <input type="text" id="timeAdded" placeholder="time added">
-                <button class="addbutton"> add a comic </button>
+        <div class="options">
+            <div class="add">
+                <h2>Add new Comic</h2>
+                <div>
+                    <input type="text" id="title" placeholder="title">
+                    <input type="text" id="authorName" placeholder="author name">
+                    <input type="text" id="publisherName" placeholder="publisher name">
+                    <input type="number" id="pages" placeholder="pages">
+                    <input type="text" id="genre" placeholder="genre">
+                    <input type="number" id="year" placeholder="year">
+                    <input type="number" id="price" placeholder="price">
+                    <input type="number" id="discount" placeholder="discount (optional)">
+                    <input type="text" id="timeAdded" placeholder="time added">
+                    <button class="addbutton"> add a comic </button>
+                </div>
+            </div>
+            <div class="filters">
+                <div>
+                    <select title="genres" name="genres" id="genres">
+                        <option value="Action">Action</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="History">History</option>
+                        <option value="Dark Fantasy">Dark Fantasy</option>
+                        <option value="Steampunk">Steampunk</option>
+                        <option value="Mystery">Mystery</option>
+                    </select>
+                </div>
+                <button class="genres">search by genres </button>
+                <button class="newproducts">list of new products</button>
+                <button class="topsales">top sales</button>
+
             </div>
         </div>
         <div class="storage">
@@ -35,7 +56,7 @@
     </div>
     <div class="card">
         <h2>Card</h2>
-<div class="cardelements"></div>
+        <div class="cardelements"></div>
     </div>
     <script src="script.js"></script>
 </body>
